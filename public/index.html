@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <meta
+            name="google-signin-client_id"
+            content="686897470334-afnrq9iuqkpe42ot5u66i8bc8f294agq.apps.googleusercontent.com"
+        />
+        <title>Spotify - Web Player : Music for everyone</title>
+    </head>
+    <body>
+        <noscript>
+            <strong
+                >We're sorry but Spotify Player doesn't work properly without
+                JavaScript enabled. Please enable it to continue.</strong
+            >
+        </noscript>
+        <div id="app"></div>
+
+        <script>
+            function onSuccess(googleUser) {
+                console.log(
+                    "Logged in as: " + googleUser.getBasicProfile().getName()
+                );
+            }
+            function onFailure(error) {
+                console.error(error);
+            }
+            function RenderGoogleButton() {
+                gapi.signin2.render("google-button", {
+                    scope: "profile email",
+                    longtitle: true,
+                    onsuccess: onSuccess,
+                    onfailure: onFailure
+                });
+            }
+        </script>
+        <script
+            src="https://apis.google.com/js/platform.js?onload=RenderGoogleButton"
+            async
+            defer
+        ></script>
+        <!-- built files will be auto injected -->
+    </body>
+</html>

@@ -1,0 +1,27 @@
+@use "sass:map";
+
+// ***** Colors ***** //
+
+$colors: (
+    gray: #b3b3b3,
+    success: #1db954,
+    google: #4285f4,
+    facebook: #3b5998
+);
+
+// ***** Base Sizing ***** //
+
+$components: (
+    sidebar-width: 232px,
+    topbar-height: 60px,
+    songbar-height: 90px
+);
+
+$sizing: (
+    base: 24px,
+    xxs: 4px,
+    xs: 8px,
+    sm: 16px,
+    md: 24px,
+    lg: 32px
+);

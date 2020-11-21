@@ -1,0 +1,22 @@
+.google-button {
+    .abcRioButton {
+        height: 48px !important;
+        flex-wrap: nowrap;
+        border-radius: 32px;
+        color: white;
+        min-width: 264px;
+
+        .abcRioButtonContentWrapper {
+            @include flex();
+        }
+
+        .abcRioButtonContents {
+            span {
+                @include font-weight(700);
+                letter-spacing: 0.15px;
+                @include font-size(14px);
+                color: map-get($colors, facebook) !important;
+            }
+        }
+    }
+}
