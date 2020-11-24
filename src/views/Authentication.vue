@@ -9,11 +9,7 @@
                 />
             </div>
             <div class="auth-container">
-                <div id="google-button" class="google-button" />
-                <!--                <button class="auth-btn google">-->
-                <!--                    <Icon :size="20" class="icon" ionicons name="google"></Icon>-->
-                <!--                    Google-->
-                <!--                </button>-->
+                <google />
                 <button class="auth-btn facebook">
                     <Icon :size="20" class="icon" ionicons name="facebook" />
                     Facebook
@@ -24,8 +20,10 @@
 </template>
 
 <script>
+import Google from "@/components/authentication/Google";
 export default {
-    name: "Authentication"
+    name: "Authentication",
+    components: { Google }
 };
 </script>
 
@@ -51,10 +49,7 @@ export default {
         .auth-container {
             @include flex-column();
 
-            .google-button {
-                margin-bottom: map-get($sizing, base);
-            }
-            .auth-btn {
+            ::v-deep .auth-btn {
                 padding: map-get($sizing, sm);
                 @include flex();
                 flex-wrap: nowrap;
@@ -64,6 +59,7 @@ export default {
                 min-width: 264px;
 
                 .icon {
+                    @include dimension(20px);
                     margin-right: map-get($sizing, xs);
                 }
 
@@ -72,7 +68,8 @@ export default {
                 }
 
                 &.google {
-                    background-color: #4285f4;
+                    background-color: #ffffff;
+                    color: map-get($colors, darkgray);
                 }
 
                 &.facebook {

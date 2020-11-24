@@ -20,29 +20,12 @@
         </noscript>
         <div id="app"></div>
 
-        <script>
-            function onSuccess(googleUser) {
-                console.log(
-                    "Logged in as: " + googleUser.getBasicProfile().getName()
-                );
-            }
-            function onFailure(error) {
-                console.error(error);
-            }
-            function RenderGoogleButton() {
-                gapi.signin2.render("google-button", {
-                    scope: "profile email",
-                    longtitle: true,
-                    onsuccess: onSuccess,
-                    onfailure: onFailure
-                });
-            }
-        </script>
         <script
-            src="https://apis.google.com/js/platform.js?onload=RenderGoogleButton"
+            src="https://apis.google.com/js/platform.js"
             async
             defer
         ></script>
+
         <!-- built files will be auto injected -->
     </body>
 </html>
