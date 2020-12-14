@@ -195,11 +195,41 @@
         letter-spacing: 0.5px;
     } @else if $weight == 700 {
         font-family: "Gilroy Bold", sans-serif;
-    }  @else if $weight == 900 {
+    } @else if $weight == 900 {
         font-family: "Gilroy Heavy", sans-serif;
     } @else if $weight == 400 {
         font-family: "Gilroy Regular", sans-serif;
     } @else if $weight == 100 {
         font-family: "Gilroy Light", sans-serif;
+    }
+}
+
+@mixin range-track {
+    &::-webkit-slider-runnable-track {
+        @content;
+    }
+    &::-moz-range-track {
+        @content;
+    }
+    &::-ms-track {
+        @content;
+    }
+}
+
+@mixin range-thumb {
+    &::-webkit-slider-thumb {
+        @content;
+    }
+    &::-moz-range-thumb {
+        @content;
+    }
+    &::-ms-thumb {
+        @content;
+    }
+}
+
+@mixin range-progress {
+    &::-moz-range-progress {
+        @content;
     }
 }

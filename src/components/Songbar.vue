@@ -17,26 +17,7 @@
                 <Icon name="maximize" class="action-icon" :size="16" />
             </div>
         </div>
-        <div class="play-bar">
-            <div class="controls">
-                <button class="control-byn">
-                    <Icon name="shuffle" :size="16"></Icon>
-                </button>
-                <button class="control-btn">
-                    <Icon name="skip-back" :size="16"></Icon>
-                </button>
-                <button class="control-btn play-btn">
-                    <Icon name="play" :size="16"></Icon>
-                </button>
-                <button class="control-btn">
-                    <Icon name="skip-forward" :size="16"></Icon>
-                </button>
-                <button class="control-btn">
-                    <Icon name="repeat" :size="16"></Icon>
-                </button>
-            </div>
-            <ProgressBar music />
-        </div>
+        <Player />
         <div class="song-options">
             <button class="control-btn">
                 <Icon name="type" :size="16"></Icon>
@@ -54,11 +35,13 @@
 
 <script>
 import ProgressBar from "@/components/shared/ProgressBar";
+import Player from "@/components/songbar/Player";
 export default {
+    name: "Songbar",
     components: {
+        Player,
         ProgressBar
-    },
-    name: "Songbar"
+    }
 };
 </script>
 
@@ -70,16 +53,11 @@ export default {
     padding: 0 map-get($sizing, sm);
     @include flex();
 
-    .control-btn {
-        cursor: pointer;
+    ::v-deep .control-btn {
         @include dimension(32px);
         @include flex();
+        cursor: pointer;
         border-radius: 50%;
-
-        &.play-btn {
-            border: 1px solid #ffffff;
-            padding-left: 1.5px;
-        }
     }
 
     .song-details {
@@ -122,17 +100,6 @@ export default {
                 cursor: pointer;
                 margin-right: map-get($sizing, sm);
             }
-        }
-    }
-
-    .play-bar {
-        flex: 4;
-        @include flex-column();
-
-        .controls {
-            width: 224px;
-            margin-bottom: map-get($sizing, "sm");
-            @include flex(space-between);
         }
     }
 
