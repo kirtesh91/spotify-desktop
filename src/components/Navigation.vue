@@ -1,10 +1,10 @@
 <template>
     <div class="navigation">
         <div class="content-left">
-            <button class="action-btn">
+            <button class="action-btn" @click="prev">
                 <icon name="chevron-left"></icon>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" @click="next">
                 <icon name="chevron-right"></icon>
             </button>
         </div>
@@ -16,7 +16,15 @@
 
 <script>
 export default {
-    name: "Navigation"
+    name: "Navigation",
+    methods: {
+        prev() {
+            this.$router.go(-1);
+        },
+        next() {
+            this.$router.go(1);
+        }
+    }
 };
 </script>
 

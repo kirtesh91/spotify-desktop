@@ -1,20 +1,18 @@
 <template>
     <div class="songbar">
-        <div class="song-details">
-            <div class="cover-art">
-                <img
-                    src="https://i.scdn.co/image/ab67616d0000b273abbd90b610db22f52190eb8c"
-                    alt="Still"
-                    class="cover"
-                />
-            </div>
-            <div class="content">
-                <h2 class="title">Missin You Crazy</h2>
-                <h5 class="artist">Russ</h5>
-            </div>
-            <div class="actions">
-                <Icon name="heart" class="action-icon" :size="16" />
-                <Icon name="maximize" class="action-icon" :size="16" />
+        <div class="song-details-container">
+            <div class="song-details" v-if="track">
+                <div class="cover-art">
+                    <img :src="track.picture" alt="Still" class="cover" />
+                </div>
+                <div class="content">
+                    <h2 class="title">{{ track.name }}</h2>
+                    <h5 class="artist">{{ track.artist }}</h5>
+                </div>
+                <div class="actions">
+                    <Icon name="heart" class="action-icon" :size="16" />
+                    <Icon name="maximize" class="action-icon" :size="16" />
+                </div>
             </div>
         </div>
         <Player />
@@ -36,11 +34,28 @@
 <script>
 import ProgressBar from "@/components/shared/ProgressBar";
 import Player from "@/components/songbar/Player";
+import { mapGetters } from "vuex";
+
 export default {
     name: "Songbar",
     components: {
         Player,
         ProgressBar
+    },
+    computed: {
+        ...mapGetters({
+            playback: "player/playback"
+        }),
+        track() {
+            if (!this.playback) return null;
+            const song = this.playback.item;
+
+            return {
+                name: song.name,
+                picture: song.album.images[0].url,
+                artist: song.artists.map(artist => artist.name).join(", ")
+            };
+        }
     }
 };
 </script>
@@ -60,8 +75,10 @@ export default {
         border-radius: 50%;
     }
 
-    .song-details {
+    .song-details-container {
         flex: 3;
+    }
+    .song-details {
         @include flex(flex-start);
         flex-wrap: nowrap;
 
@@ -78,18 +95,21 @@ export default {
 
         .content {
             margin: 0 map-get($sizing, sm);
+            min-width: 1px;
             color: white;
         }
 
         .title {
             @include font-size(14px);
             margin-bottom: map-get($sizing, xs);
+            @include text-overflow-ellipsis();
         }
 
         .artist {
             @include font-size(12px);
             @include font-weight(400);
             color: map-get($colors, gray);
+            @include text-overflow-ellipsis();
         }
 
         .actions {

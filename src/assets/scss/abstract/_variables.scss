@@ -3,9 +3,13 @@
 // ***** Colors ***** //
 
 $colors: (
+    white: #ffffff,
     gray: #b3b3b3,
     darkgray: #666666,
+    midgray: #888888,
     success: #1db954,
+    alert: #f89d19,
+    danger: #d0021b,
     google: #4285f4,
     facebook: #3b5998
 );
@@ -20,8 +24,10 @@ $components: (
 
 $sizing: (
     base: 24px,
+    xxxs: 2px,
     xxs: 4px,
     xs: 8px,
+    xm: 12px,
     sm: 16px,
     md: 24px,
     lg: 32px

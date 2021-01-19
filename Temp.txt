@@ -1,0 +1,83 @@
+Vue Template
+
+
+<template></template>
+<script>
+{
+    props: {
+
+    },
+    data: {
+        isVisible: false
+        // Variables
+    },
+    methods: {
+        // Functions
+    },
+    computed: {
+
+    },
+    watch: {
+
+    },
+    components: {
+
+    }
+}
+</script>
+
+<style></style>
+
+
+
+
+Lifecycle:
+
+
+created(),
+mounted(),
+
+
+Promise: (resolve, reject) => {
+
+}
+
+
+
+
+
+Vuex : Central Data Storage
+{
+    state: {
+        isPlaying: false
+    },
+    getters: {
+        isPlaying: state => state.isPlaying
+    },
+    mutations: {
+        SET_PLAYING() {
+            isPlaying = true;
+        }
+    },
+    actions: {
+        play() {
+            commit(SET_PLAYING);
+        }
+    }
+}
+
+SongCard : ClickEvent -> play()
+SongBar : getters(isPlaying)
+
+
+
+VueRouter : Routing Purpose
+
+
+
+HTTP Request:
+GET
+POST
+PUT
+PATCH
+DELETE

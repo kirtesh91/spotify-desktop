@@ -1,25 +1,57 @@
 <template>
-    <div class="card">
+    <div class="card" :class="`${type}-card`" @click="onclick">
         <div class="cover-art">
-            <img
-                src="https://i.scdn.co/image/ab67706f000000029e7a22aa0a886e0e01df9171"
-                alt="This is RUSS"
-                class="cover"
-            />
+            <img :src="song.picture" alt="This is RUSS" class="cover" />
             <button class="play-btn">
                 <Icon name="play" ionicons :size="16" />
             </button>
         </div>
         <div class="content">
-            <h2 class="title">This is Russ Russ Russ Russ</h2>
-            <h5 class="artist">Russ</h5>
+            <h2 class="title">{{ song.name }}</h2>
+            <h5 class="artist">{{ song.subtitle }}</h5>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: "SongCard"
+    name: "SongCard",
+    props: {
+        item: Object
+    },
+    computed: {
+        type() {
+            return this.item.type;
+        },
+        song() {
+            const item = this.item;
+
+            return {
+                name: item.name,
+                picture:
+                    this.type === "track"
+                        ? item.album.images[0].url
+                        : item.images[0].url,
+                subtitle:
+                    this.type === "artist"
+                        ? "Artist"
+                        : item.artists.map(artist => artist.name).join(", ")
+            };
+        }
+    },
+    methods: {
+        onclick() {
+            this.$router.push({
+                name: this.type === "artist" ? "artist" : "album",
+                params: {
+                    id:
+                        this.type === "track"
+                            ? this.item.album.id
+                            : this.item.id
+                }
+            });
+        }
+    }
 };
 </script>
 
@@ -39,7 +71,6 @@ export default {
         margin-bottom: map-get($sizing, sm);
         background-color: #333;
         border-radius: 3px;
-        overflow: hidden;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 
         .cover {
@@ -76,8 +107,9 @@ export default {
         margin-top: map-get($sizing, xxs);
         text-overflow: ellipsis;
         overflow: hidden;
+        white-space: nowrap;
         @include font-weight(500);
-        color: map-get($colors, gray);
+        color: map-get($colors, darkgray);
     }
 
     &:hover {
@@ -86,6 +118,15 @@ export default {
         .play-btn {
             transform: translateY(0);
             opacity: 1;
+        }
+    }
+
+    &.artist-card {
+        .cover-art {
+            border-radius: 50%;
+            .cover {
+                border-radius: 50%;
+            }
         }
     }
 }

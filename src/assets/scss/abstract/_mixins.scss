@@ -69,19 +69,18 @@
     @include dimension($size);
 }
 
-@mixin flex($justify-content: center, $align-items: center, $flex-wrap: wrap) {
+@mixin flex-maker($justify-content: center, $align-items: center) {
     display: flex;
     align-items: $align-items;
     justify-content: $justify-content;
-    flex-wrap: $flex-wrap;
 }
 
-@mixin flex-column(
-    $justify-content: center,
-    $align-items: center,
-    $flex-wrap: wrap
-) {
-    @include flex($justify-content, $align-items, $flex-wrap);
+@mixin flex($justify-content: center, $align-items: center) {
+    @include flex-maker($justify-content, $align-items);
+}
+
+@mixin flex-column($align-items: center, $justify-content: center) {
+    @include flex-maker($justify-content, $align-items);
     flex-direction: column;
 }
 
@@ -232,4 +231,10 @@
     &::-moz-range-progress {
         @content;
     }
+}
+
+@mixin text-overflow-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

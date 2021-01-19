@@ -4,23 +4,26 @@
             <img src="/images/core/logo.svg" :alt="WEB.name" />
         </div>
         <div class="navigation">
-            <div class="nav-item">
+            <router-link :to="{ name: 'home' }" class="nav-item">
                 <icon name="home" :size="24"></icon>
                 <span>Home</span>
-            </div>
-            <div class="nav-item">
+            </router-link>
+            <router-link :to="{ name: 'search' }" class="nav-item">
                 <icon name="search" :size="24"></icon>
                 <span>Search</span>
-            </div>
-            <div class="nav-item">
-                <icon name="disc" :size="24"></icon>
-                <span>Your Library</span>
-            </div>
+            </router-link>
+            <!--            <div class="nav-item">-->
+            <!--                <icon name="disc" :size="24"></icon>-->
+            <!--                <span>Your Library</span>-->
+            <!--            </div>-->
         </div>
         <div class="navigation playlists">
             <div class="header"><span>Playlists</span></div>
             <div class="item-group">
-                <div class="nav-item playlist-item">
+                <div
+                    class="nav-item playlist-item"
+                    @click="onCreatePlaylistClick"
+                >
                     <div class="item-icon add-icon">
                         <icon dark name="plus" :size="18"></icon>
                     </div>
@@ -32,14 +35,42 @@
                     </div>
                     <span>Liked Songs</span>
                 </div>
+                <router-link
+                    class="nav-item playlist-item"
+                    v-for="(playlist, index) in playlists"
+                    :key="`P${index}`"
+                    :to="{ name: 'playlist', params: { id: playlist.id } }"
+                >
+                    {{ playlist.name }}
+                </router-link>
             </div>
         </div>
     </nav>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-    name: "Sidebar"
+    name: "Sidebar",
+    computed: {
+        ...mapGetters({
+            playlists: "playlist/playlists"
+        })
+    },
+    methods: {
+        onCreatePlaylistClick() {
+            this.$store.dispatch("playlist/route", {
+                mode: "create",
+                visible: true
+            });
+        },
+        getPlaylists() {
+            this.$store.dispatch("playlist/retrieve");
+        }
+    },
+    mounted() {
+        this.getPlaylists();
+    }
 };
 </script>
 

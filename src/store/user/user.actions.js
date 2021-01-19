@@ -2,12 +2,13 @@ import axios from "axios";
 import { uris } from "@/constants";
 
 export const actions = {
-    login(context, data) {
+    getProfile({ commit }) {
         return new Promise((resolve, reject) => {
             axios
-                .post(uris.users.me, data)
+                .get(uris.users.me)
                 .then(response => {
-                    console.log(response.data);
+                    commit("SET_PROFILE", response.data);
+                    commit("SET_INITIALIZED", true);
                     resolve(response);
                 })
                 .catch(error => {
@@ -15,5 +16,8 @@ export const actions = {
                     reject(error);
                 });
         });
+    },
+    setInitialized({ commit }, status) {
+        commit("SET_INITIALIZED", status);
     }
 };

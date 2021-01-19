@@ -1,0 +1,64 @@
+.modal.playlist-modal {
+    @include fixed(top 0 left 0 bottom 0 right 0);
+    z-index: 7;
+    background-color: rgba(0, 0, 0, 0.7);
+    @include flex();
+
+    .content {
+        width: 100%;
+        padding: 64px 0;
+        background: #0a0a0a;
+        box-shadow: 0 0 42px rgba(0, 0, 0, 0.8);
+
+        .container {
+            padding: 0 map-get($components, sidebar-width);
+
+            form {
+                @include flex(flex-start);
+
+                .cover {
+                    @include dimension(176px);
+                    border-radius: 4px;
+                    margin-right: map-get($sizing, lg);
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+                }
+
+                .body {
+                    @include flex-column(flex-start);
+                }
+            }
+        }
+
+        .title {
+            @include font-size(14px);
+            color: #555555;
+            text-transform: uppercase;
+            margin-bottom: map-get($sizing, base);
+        }
+
+        .playlist-name {
+            background: transparent;
+            border: none;
+            color: map-get($colors, gray);
+            @include font-size(32px);
+            border-bottom: 1px solid #222222;
+            padding-bottom: map-get($sizing, base);
+            margin-bottom: map-get($sizing, base);
+        }
+
+        .actions {
+            .submit-btn {
+                padding: map-get($sizing, xs) map-get($sizing, lg);
+                background: map-get($colors, gray);
+                border-radius: 2px;
+            }
+            .close-btn {
+                padding: map-get($sizing, xs) map-get($sizing, lg);
+                margin-left: map-get($sizing, sm);
+                color: #ffffff;
+                background-color: #151515;
+                border-radius: 2px;
+            }
+        }
+    }
+}
