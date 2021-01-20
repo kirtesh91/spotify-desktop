@@ -10,8 +10,13 @@
             </main>
             <songbar></songbar>
 
-            <create-playlist v-if="isCreateVisible" />
-            <edit-playlist v-if="isEditVisible" />
+            <transition name="fade">
+                <create-playlist v-if="isCreateVisible" />
+            </transition>
+            <transition name="fade">
+                <edit-playlist v-if="isEditVisible" />
+            </transition>
+            <song-card-menu v-if="isSongMenuVisible" />
         </div>
     </div>
 </template>
@@ -25,9 +30,11 @@ import { mapGetters } from "vuex";
 import Loader from "@/components/shared/Loader";
 import CreatePlaylist from "@/views/modals/CreatePlaylist";
 import EditPlaylist from "@/views/modals/EditPlaylist";
+import SongCardMenu from "@/components/contexts/SongCardMenu";
 
 export default {
     components: {
+        SongCardMenu,
         EditPlaylist,
         CreatePlaylist,
         Loader,
@@ -39,7 +46,8 @@ export default {
         ...mapGetters({
             authorized: "user/authorized",
             isEditVisible: "playlist/isEditVisible",
-            isCreateVisible: "playlist/isCreateVisible"
+            isCreateVisible: "playlist/isCreateVisible",
+            isSongMenuVisible: "menu/isSongVisible"
         })
     },
     created() {
@@ -51,6 +59,19 @@ export default {
     },
     mounted() {
         this.$store.dispatch("player/init");
+
+        document.addEventListener("contextmenu", event =>
+            event.preventDefault()
+        );
+
+        document.addEventListener("click", () => {
+            if (this.isSongMenuVisible) {
+                this.$store.dispatch("menu/toggle", {
+                    name: "song",
+                    visible: false
+                });
+            }
+        });
     }
 };
 </script>

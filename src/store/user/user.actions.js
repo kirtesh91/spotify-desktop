@@ -12,7 +12,9 @@ export const actions = {
                     resolve(response);
                 })
                 .catch(error => {
-                    console.log(error.response.data);
+                    console.log("Token Expired");
+                    localStorage.removeItem("@spotify:access_token");
+                    window.location.reload();
                     reject(error);
                 });
         });

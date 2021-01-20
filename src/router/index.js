@@ -5,6 +5,7 @@ import Search from "@/views/Search";
 import Album from "@/views/Album";
 import Artist from "@/views/Artist";
 import Playlist from "@/views/Playlist";
+import { middleware } from "@/router/middleware";
 
 const routes = [
     {
@@ -15,7 +16,12 @@ const routes = [
     {
         path: "/login",
         name: "login",
-        component: Authentication
+        component: Authentication,
+        meta: {
+            middleware: {
+                guest: true
+            }
+        }
     },
     {
         path: "/search",
@@ -43,5 +49,7 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 });
+
+router.beforeEach(middleware);
 
 export default router;

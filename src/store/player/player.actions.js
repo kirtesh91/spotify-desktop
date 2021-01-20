@@ -107,6 +107,7 @@ export const actions = {
     async setPlayback({ commit }) {
         try {
             const response = await getCurrentPlayback();
+            console.log(response.data);
             commit("SET_PLAYBACK", response.data);
         } catch (e) {
             console.log(e);

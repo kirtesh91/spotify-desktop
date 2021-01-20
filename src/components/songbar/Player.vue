@@ -15,7 +15,13 @@
                 <Icon name="skip-forward" :size="16"></Icon>
             </button>
             <button class="control-btn" @click="repeat">
-                <Icon name="repeat" :size="16"></Icon>
+                <Icon
+                    name="repeat"
+                    :size="16"
+                    :success="
+                        playback ? playback.repeat_state !== 'off' : false
+                    "
+                ></Icon>
             </button>
         </div>
         <PlayBar ref="player" />
@@ -70,19 +76,25 @@ export default {
             this.playing = !this.playing;
         },
         next() {
-            console.log("next");
-            player.nextTrack(this.$store.getters["player/deviceId"]);
+            player
+                .nextTrack(this.$store.getters["player/deviceID"])
+                .then(() => {
+                    this.$store.dispatch("player/setPlayback");
+                });
         },
         prev() {
-            player.previousTrack();
+            player.previousTrack(this.$store.getters["player/deviceID"]);
+            this.$store.dispatch("player/setPlayback");
         },
         shuffle() {
             player.shuffle(!this.shuffling);
             this.shuffling = !this.shuffling;
         },
         repeat() {
-            player.repeat(!this.repeating);
-            this.repeating = !this.repeating;
+            const repeat =
+                this.playback.repeat_state === "off" ? "track" : "off";
+
+            player.repeat(repeat);
         }
     }
 };

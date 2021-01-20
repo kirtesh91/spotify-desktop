@@ -11,7 +11,8 @@ export default {
             visible: false,
             playlist: null
         },
-        playlists: []
+        playlists: [],
+        liked: []
     },
     actions: {
         create({ rootGetters, commit }, data) {
@@ -24,6 +25,29 @@ export default {
                     .post(uris.playlists.create(user.id), data)
                     .then(response => {
                         commit("ADD_PLAYLIST", response.data);
+                        commit("TOGGLE_VISIBILITY", {
+                            mode: "create",
+                            visible: false
+                        });
+                        resolve(response.data);
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
+            });
+        },
+        edit({ commit }, data) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .put(uris.playlists.edit(data.id), { name: data.name })
+                    .then(response => {
+                        console.log(response.data);
+                        commit("UPDATE_PLAYLIST", data);
+
+                        commit("TOGGLE_VISIBILITY", {
+                            mode: "edit",
+                            visible: false
+                        });
                         resolve(response.data);
                     })
                     .catch(err => {
@@ -59,6 +83,15 @@ export default {
         },
         ADD_PLAYLIST(state, playlist) {
             state.playlists.push(playlist);
+        },
+        UPDATE_PLAYLIST(state, playlist) {
+            state.playlists = state.playlists.map(_playlist => {
+                if (_playlist.id === playlist.id) {
+                    _playlist.name = playlist.name;
+                }
+
+                return _playlist;
+            });
         },
         REMOVE_PLAYLIST(state, id) {
             state.playlists = state.playlists.filter(

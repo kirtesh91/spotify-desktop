@@ -1,12 +1,15 @@
 <template>
     <i class="icon">
-        <object
+        <img
             class="icon-svg"
-            :class="{ white: !dark, 'pure-white': ionicons && !dark }"
-            :data="`/images/icons/${family}/${name}.svg`"
-            type="image/svg+xml"
+            :class="{
+                white: !dark,
+                'pure-white': ionicons && !dark,
+                success: success
+            }"
+            :src="`/images/icons/${family}/${name}.svg`"
             :style="{ height: `${size}px`, width: `${size}px` }"
-        ></object>
+        />
     </i>
 </template>
 
@@ -20,6 +23,10 @@ export default {
             default: 24
         },
         dark: {
+            type: Boolean,
+            default: false
+        },
+        success: {
             type: Boolean,
             default: false
         },
@@ -46,6 +53,10 @@ i.icon {
     }
     &.pure-white {
         filter: invert(1);
+    }
+    &.success {
+        filter: invert(54%) sepia(90%) saturate(424%) hue-rotate(89deg)
+            brightness(90%) contrast(89%);
     }
 }
 </style>

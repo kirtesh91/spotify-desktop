@@ -81,3 +81,36 @@ POST
 PUT
 PATCH
 DELETE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Modules :
+
+> Authentication
+> HomePage
+> Search
+> Components
+    :Navigation
+    :Sidebar
+    :Player
+> Playlist
+    :Show
+    :Create
+    :Edit
+    :Remove
+> Like
+    :Playlist Toggle Like
+    :Song Like

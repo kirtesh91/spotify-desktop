@@ -45,13 +45,15 @@ export default {
     name: "EditPlaylist",
     data() {
         return {
-            name: null
+            name: null,
+            id: null
         };
     },
     methods: {
         onsubmit() {
-            this.$store.dispatch("playlist/create", {
-                name: this.name
+            this.$store.dispatch("playlist/edit", {
+                name: this.name,
+                id: this.id
             });
         },
         onclose() {
@@ -64,6 +66,7 @@ export default {
     mounted() {
         const playlist = this.$store.getters["playlist/editPlaylist"];
         this.name = playlist.name;
+        this.id = playlist.id;
     }
 };
 </script>

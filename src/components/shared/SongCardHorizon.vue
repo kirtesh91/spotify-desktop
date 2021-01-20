@@ -1,5 +1,5 @@
 <template>
-    <div class="song-card-horizon" @click="onclick">
+    <div class="song-card-horizon" @click="onclick" @contextmenu="oncontext">
         <div class="index">
             <span>{{ index }}</span>
             <icon name="play" :size="14" ionicons></icon>
@@ -17,7 +17,15 @@
         <div class="album">
             <span>{{ song.album.name }}</span>
         </div>
-        <div class="duration">
+        <div class="duration" @click="onlike">
+            <div class="like" :class="{ active: liked }">
+                <icon
+                    :name="liked ? 'heart' : 'heart-outline'"
+                    :size="16"
+                    ionicons
+                    :success="liked"
+                />
+            </div>
             <span>{{ song.duration }}</span>
         </div>
     </div>
@@ -28,6 +36,7 @@ import { time } from "@/helpers/utils";
 import Icon from "@/components/Icon";
 import { playTrack } from "@/helpers/player";
 import { mapGetters } from "vuex";
+import { likeTrack } from "@/helpers/song";
 
 export default {
     name: "SongCardHorizon",
@@ -36,6 +45,11 @@ export default {
         index: Number,
         item: Object,
         album: Object
+    },
+    data() {
+        return {
+            liked: false
+        };
     },
     computed: {
         ...mapGetters({
@@ -47,6 +61,8 @@ export default {
         song() {
             const item = this.item;
 
+            console.log("Item", this.item);
+
             return {
                 picture:
                     this.type === "track"
@@ -55,6 +71,8 @@ export default {
                             : item.album.images[0].url
                         : item.images[0].url,
                 name: item.name,
+                id: item.id,
+                uri: item.uri,
                 album: {
                     name: this.album ? this.album.name : item.album.name
                 },
@@ -68,13 +86,36 @@ export default {
         onclick() {
             if (this.type !== "track") return;
 
+            const params = { uris: [this.item.uri] };
+
             if (!this.currentTrack) {
-                playTrack({ uris: [this.item.uri] });
+                playTrack(params);
                 return;
             }
 
             if (this.currentTrack.id === this.item.id) return;
-            playTrack({ uris: [this.item.uri] });
+            playTrack(params);
+        },
+        oncontext(e) {
+            const position = {
+                left: e.pageX,
+                top: e.pageY
+            };
+
+            this.$store.dispatch("menu/toggle", {
+                name: "song",
+                position: position,
+                visible: true,
+                data: {
+                    id: this.song.id,
+                    uri: this.song.uri
+                }
+            });
+        },
+        onlike(e) {
+            e.stopPropagation();
+            likeTrack([this.song.id]);
+            this.liked = true;
         }
     }
 };
@@ -153,6 +194,19 @@ export default {
         @include text-overflow-ellipsis();
     }
 
+    .duration {
+        .like {
+            cursor: pointer;
+            opacity: 0;
+            margin-right: map-get($sizing, sm);
+            pointer-events: none;
+
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+
     &:hover {
         .index {
             span {
@@ -160,6 +214,13 @@ export default {
             }
             ::v-deep .icon {
                 display: block;
+            }
+        }
+
+        .duration {
+            .like {
+                opacity: 1;
+                pointer-events: all;
             }
         }
     }

@@ -183,3 +183,50 @@ export const getArtistAlbums = (id, params) => {
             });
     });
 };
+
+export const addToQueue = uri => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(uris.player.queue, null, {
+                params: {
+                    uri: uri
+                }
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+};
+
+export const addToPlaylist = (id, _uris) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(uris.playlists.add(id), {
+                uris: _uris
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+};
+
+export const likeTrack = ids => {
+    return new Promise((resolve, reject) => {
+        axios
+            .put(uris.library.save, {
+                ids: ids
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+};

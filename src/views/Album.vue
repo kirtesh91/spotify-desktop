@@ -14,7 +14,7 @@
         </div>
         <div class="content">
             <div class="actions">
-                <button class="play-btn">
+                <button class="play-btn" @click="onplay">
                     <icon name="play" ionicons :size="24"></icon>
                 </button>
                 <button class="like-btn">
@@ -68,6 +68,7 @@
 import { getAlbum, getArtistTopTracks } from "@/helpers/song";
 import SongCardHorizon from "@/components/shared/SongCardHorizon";
 import SongCard from "@/components/shared/SongCard";
+import { playTrack } from "@/helpers/player";
 
 export default {
     name: "Album",
@@ -87,6 +88,7 @@ export default {
 
             return {
                 name: this.album.name,
+                uri: this.album.uri,
                 type: this.album.album_type,
                 picture: this.album.images[0].url,
                 artists: this.album.artists.map(artist => ({
@@ -122,6 +124,11 @@ export default {
             } catch (err) {
                 console.log(err);
             }
+        },
+        onplay() {
+            playTrack({
+                context_uri: this.album.uri
+            });
         }
     },
     created() {

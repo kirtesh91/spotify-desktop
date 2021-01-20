@@ -6,7 +6,8 @@ export default {
     namespaced: true,
     state: {
         profile: null,
-        isLoggedIn: false
+        isLoggedIn: false,
+        initialized: false
     },
     mutations: mutations,
     getters: getters,

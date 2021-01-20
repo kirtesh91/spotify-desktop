@@ -1,5 +1,11 @@
 <template>
-    <div class="card" :class="`${type}-card`" @click="onclick">
+    <div
+        class="card"
+        :class="`${type}-card`"
+        @click="onclick"
+        @contextmenu="oncontext"
+        v-if="song"
+    >
         <div class="cover-art">
             <img :src="song.picture" alt="This is RUSS" class="cover" />
             <button class="play-btn">
@@ -28,6 +34,8 @@ export default {
 
             return {
                 name: item.name,
+                id: item.id,
+                uri: item.uri,
                 picture:
                     this.type === "track"
                         ? item.album.images[0].url
@@ -50,6 +58,23 @@ export default {
                             : this.item.id
                 }
             });
+        },
+        oncontext(e) {
+            if (!this.type === "track") return;
+            const position = {
+                left: e.pageX,
+                top: e.pageY
+            };
+
+            this.$store.dispatch("menu/toggle", {
+                name: "song",
+                position: position,
+                visible: true,
+                data: {
+                    id: this.song.id,
+                    uri: this.song.uri
+                }
+            });
         }
     }
 };
@@ -63,6 +88,7 @@ export default {
     background: #181818;
     border-radius: 4px;
     @include transition();
+    overflow: visible;
 
     .cover-art {
         width: 100%;

@@ -11,7 +11,8 @@ export const uris = {
         next: "/me/player/next",
         prev: "/me/player/previous",
         recent: "/me/player/recently-played",
-        top: type => `me/top/${type}`
+        top: type => `me/top/${type}`,
+        queue: "/me/player/queue"
     },
     browse: {
         releases: "/browse/new-releases"
@@ -32,6 +33,12 @@ export const uris = {
     playlists: {
         single: id => `/playlists/${id}`,
         create: id => `/users/${id}/playlists`,
+        add: id => `/playlists/${id}/tracks`,
+        edit: id => `/playlists/${id}`,
         retrieve: "/me/playlists"
+    },
+    library: {
+        save: "/me/tracks",
+        retrieve: "/me/tracks"
     }
 };

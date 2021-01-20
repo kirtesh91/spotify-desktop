@@ -20,7 +20,7 @@
             </div>
             <div v-else>
                 <div class="actions">
-                    <button class="play-btn">
+                    <button class="play-btn" @click="onplay">
                         <icon name="play" ionicons :size="24"></icon>
                     </button>
                     <button class="like-btn">
@@ -54,6 +54,7 @@
 import { getPlaylist } from "@/helpers/song";
 import SongCardHorizon from "@/components/shared/SongCardHorizon";
 import Icon from "@/components/Icon";
+import { playTrack } from "@/helpers/player";
 
 export default {
     name: "Album",
@@ -98,8 +99,14 @@ export default {
                 mode: "edit",
                 visible: true,
                 data: {
-                    name: this._playlist.name
+                    name: this._playlist.name,
+                    id: this.playlist.id
                 }
+            });
+        },
+        onplay() {
+            playTrack({
+                context_uri: this.playlist.uri
             });
         }
     },
