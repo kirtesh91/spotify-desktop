@@ -1,5 +1,6 @@
 import axios from "axios";
 import { uris } from "@/constants";
+import { removeLocalData } from "@/helpers/auth";
 
 export const actions = {
     getProfile({ commit }) {
@@ -12,8 +13,7 @@ export const actions = {
                     resolve(response);
                 })
                 .catch(error => {
-                    console.log("Token Expired");
-                    localStorage.removeItem("@spotify:access_token");
+                    removeLocalData();
                     window.location.reload();
                     reject(error);
                 });

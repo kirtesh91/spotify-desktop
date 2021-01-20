@@ -78,7 +78,6 @@ export default {
     },
     mutations: {
         SET_PLAYLISTS(state, playlists) {
-            console.log(playlists);
             state.playlists = playlists;
         },
         ADD_PLAYLIST(state, playlist) {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { uris } from "@/constants";
 import { getCurrentPlayback, transferUsersPlayback } from "@/helpers/player";
+import { removeLocalData } from "@/helpers/auth";
 
 export const actions = {
     play({ commit }, id) {
@@ -62,7 +63,9 @@ export const actions = {
 
             player.addListener("authentication_error", ({ message }) => {
                 console.error(message);
-                dispatch("auth/login", null, { root: true });
+                removeLocalData();
+                window.location.reload();
+                // dispatch("auth/login", null, { root: true });
             });
 
             player.addListener("account_error", ({ message }) => {
@@ -107,7 +110,6 @@ export const actions = {
     async setPlayback({ commit }) {
         try {
             const response = await getCurrentPlayback();
-            console.log(response.data);
             commit("SET_PLAYBACK", response.data);
         } catch (e) {
             console.log(e);

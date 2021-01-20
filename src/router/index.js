@@ -18,9 +18,7 @@ const routes = [
         name: "login",
         component: Authentication,
         meta: {
-            middleware: {
-                guest: true
-            }
+            guest: true
         }
     },
     {

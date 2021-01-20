@@ -58,7 +58,9 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch("player/init");
+        if (this.$route.name !== "login") {
+            this.$store.dispatch("player/init");
+        }
 
         document.addEventListener("contextmenu", event =>
             event.preventDefault()

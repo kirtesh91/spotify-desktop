@@ -67,7 +67,9 @@ export default {
             auth.setLocalData(token);
             auth.setHeaders(token);
             this.$store.dispatch("user/getProfile");
-            this.$router.push({ name: "home" });
+            setTimeout(() => {
+                this.$router.push({ name: "home" });
+            }, 500);
         }
     },
     created() {

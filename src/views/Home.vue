@@ -81,8 +81,6 @@ export default {
     },
     created() {
         getRecent(6).then(response => {
-            console.log(response);
-
             this.recent.cursors = response.cursors;
             this.recent.items = response.items;
         });

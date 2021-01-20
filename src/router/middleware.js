@@ -8,13 +8,11 @@ export const middleware = (to, from, next) => {
         return next();
     }
 
-    console.log("Hello");
-
-    console.log(store.getters);
-
-    if (!store.getters["user/authorized"])
+    if (!store.getters["user/authorized"]) {
         return next({
             name: "login"
         });
+    }
+
     return next();
 };
